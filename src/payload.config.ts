@@ -96,7 +96,7 @@ const config = buildConfig({
       },
       beforeDashboard: ['@/components/admin/Dashboard#Dashboard'],
     },
-    css: path.resolve(dirname, 'styles/admin.scss'),
+    css: path.resolve(dirname, 'styles/admin.css'),
   },
   collections: [Users, Media, Pages, BlogPosts, Services, Vehicles, Testimonials, Products, GiftCards, Orders, Partners],
   editor: lexicalEditor(),
