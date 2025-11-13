@@ -135,6 +135,10 @@ $font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica 
   --theme-elevation-200: #1a1a1a !important;
   --theme-elevation-250: #{$lrp-border} !important;
   --theme-elevation-300: #333333 !important;
+  --theme-elevation-400: #666666 !important;
+  --theme-elevation-500: #999999 !important;
+  --theme-elevation-600: #cccccc !important;
+  --theme-elevation-800: #{$lrp-white} !important;
 
   // Text colors - high contrast
   --theme-text: #{$lrp-white} !important;
@@ -145,9 +149,22 @@ $font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica 
   --theme-success-600: #{$lrp-green-dark} !important;
   --theme-success-400: #{$lrp-green-bright} !important;
 
+  // ERROR COLORS - RED not green!
+  --theme-error-500: #ef4444 !important;
+  --theme-error-600: #dc2626 !important;
+  --theme-error-400: #f87171 !important;
+  --theme-error-300: rgba(220, 38, 38, 0.3) !important;
+  --theme-error-100: rgba(220, 38, 38, 0.1) !important;
+  --theme-error-50: rgba(220, 38, 38, 0.05) !important;
+
   // Input styling
   --theme-input-bg: #{$lrp-black-lighter} !important;
   --theme-input-border: #{$lrp-border} !important;
+
+  // Popup/dropdown styling
+  --popup-bg: #{$lrp-black-lighter} !important;
+  --popup-text: #{$lrp-white} !important;
+  --popup-button-highlight: rgba(76, 187, 23, 0.2) !important;
 
   // Typography
   --font-body: #{$font-body} !important;
@@ -731,121 +748,64 @@ button[class*="remove"],
 // CHECKBOXES & RADIO BUTTONS - ENHANCED
 // ============================================
 // Fixes mixed checkmark/dash icons and ensures consistency
+// CRITICAL: Payload uses SVG icons (.icon--check and .icon--line), NOT pseudo-elements!
 
-// CHECKBOXES - Force consistent styling across all states
-input[type="checkbox"],
-.checkbox input,
-.table input[type="checkbox"],
-.list-controls input[type="checkbox"],
-[role="checkbox"],
-[type="checkbox"] {
-  // Reset appearance completely
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
-
-  // Consistent sizing
-  width: 20px !important;
-  height: 20px !important;
-  min-width: 20px !important;
-  min-height: 20px !important;
-  max-width: 20px !important;
-  max-height: 20px !important;
-
-  // LRP brand styling
+// Checkbox wrapper styling - LRP brand colors
+.checkbox-input__input {
   border: 2px solid $lrp-green !important;
+  background: $lrp-black-lighter !important;
   border-radius: 4px !important;
-  background: $lrp-black-lighter !important;
-
-  // Interaction
-  cursor: pointer !important;
-  position: relative !important;
-  margin: 0 !important;
-  margin-right: 0.5rem !important;
-  padding: 0 !important;
-  flex-shrink: 0 !important;
-
-  // Smooth transitions
-  transition: all 0.2s ease !important;
 }
 
-// CRITICAL: Remove ALL pseudo-elements that might show dashes
-input[type="checkbox"]::before,
-input[type="checkbox"]::after,
-.checkbox input::before,
-.checkbox input::after {
-  content: none !important;
-  display: none !important;
-}
-
-// Hover state - brighter green
-input[type="checkbox"]:hover:not(:disabled):not(:checked) {
+.checkbox-input:not(.checkbox-input--read-only):hover .checkbox-input__input {
   border-color: $lrp-green-bright !important;
-  box-shadow: 0 0 0 2px rgba($lrp-green, 0.1) !important;
-  background: $lrp-black-lighter !important;
 }
 
-// Focus state - green glow
-input[type="checkbox"]:focus,
-input[type="checkbox"]:focus-visible {
-  outline: none !important;
+.checkbox-input:not(.checkbox-input--read-only):focus-within .checkbox-input__input,
+.checkbox-input:not(.checkbox-input--read-only):active .checkbox-input__input {
+  border-color: $lrp-green-bright !important;
   box-shadow: 0 0 0 3px rgba($lrp-green, 0.3) !important;
-  border-color: $lrp-green-bright !important;
 }
 
-// CHECKED state - green background
-input[type="checkbox"]:checked {
+// Checked state - LRP green background
+.checkbox-input--checked .checkbox-input__input {
   background: $lrp-green !important;
   border-color: $lrp-green !important;
 }
 
-// CHECKED - Add ONLY checkmark, never dash
-input[type="checkbox"]:checked::after {
-  content: '✓' !important;
-  display: block !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-
-  // Checkmark styling
-  color: $lrp-white !important;
-  font-size: 14px !important;
-  font-weight: 700 !important;
-  line-height: 1 !important;
-  font-family: Arial, sans-serif !important;
+// CRITICAL FIX: Hide the dash icon (.icon--line) completely
+// This is the root cause of mixed checkmark/dash display
+.checkbox-input__icon .icon--line,
+.checkbox-input__icon.partial .icon--line,
+.icon--line {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
-// INDETERMINATE state - treat as checked with checkmark
-input[type="checkbox"]:indeterminate {
-  background: $lrp-green !important;
-  border-color: $lrp-green !important;
+// CRITICAL FIX: Always show checkmark icon (.icon--check), never dash
+.checkbox-input--checked .checkbox-input__icon .icon--check,
+.checkbox-input__icon.partial .icon--check {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
-// INDETERMINATE - show checkmark, NOT dash
-input[type="checkbox"]:indeterminate::after {
-  content: '✓' !important;
-  display: block !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  color: $lrp-white !important;
-  font-size: 14px !important;
-  font-weight: 700 !important;
-  line-height: 1 !important;
+// Checkmark color - white on LRP green
+.checkbox-input__icon svg .stroke {
+  stroke: $lrp-white !important;
+}
+
+.checkbox-input__icon svg .fill {
+  fill: $lrp-white !important;
 }
 
 // Disabled state
-input[type="checkbox"]:disabled {
+.checkbox-input--read-only .checkbox-input__input {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
   background: rgba(102, 102, 102, 0.2) !important;
   border-color: #666666 !important;
-}
-
-input[type="checkbox"]:disabled:checked {
-  background: rgba($lrp-green, 0.3) !important;
 }
 
 // Selected row highlighting
@@ -1173,42 +1133,77 @@ input[type="radio"] {
 // NOTIFICATIONS & TOASTS
 // ============================================
 
+// Toast container - single border, clean styling
+.Toastify,
+.Toastify__toast-container,
+[class*="Toastify"] {
+  --toastify-color-light: #{$lrp-black-lighter} !important;
+  --toastify-color-dark: #{$lrp-black-lighter} !important;
+  --toastify-color-success: #{$lrp-green} !important;
+  --toastify-color-error: #dc2626 !important;
+  --toastify-text-color-light: #{$lrp-white} !important;
+  --toastify-text-color-dark: #{$lrp-white} !important;
+}
+
+.Toastify__toast,
 .toast,
 .notification,
 [class*="toast"],
 [class*="notification"] {
   background: $lrp-black-lighter !important;
-  border: 2px solid $lrp-green !important;
-  border-radius: 8px;
+  border: 1px solid $lrp-green !important;
+  border-radius: 8px !important;
   color: $lrp-white !important;
-  box-shadow: 0 10px 40px rgba($lrp-black, 0.8), 0 0 20px rgba($lrp-green, 0.2);
-  padding: 1rem 1.5rem;
+  box-shadow: 0 10px 40px rgba($lrp-black, 0.8) !important;
+  padding: 1rem 1.5rem !important;
 
-  &.success {
-    border-color: $lrp-green !important;
-    background: rgba($lrp-green, 0.1) !important;
-  }
-
-  &.error {
-    border-color: #dc2626 !important;
-    background: rgba(220, 38, 38, 0.1) !important;
-  }
+  // Remove any conflicting borders
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  border-left: 3px solid $lrp-green !important;
 }
 
+// Success toasts
+.Toastify__toast--success,
 .toast--success,
 .notification--success,
 [class*="toast"][class*="success"],
 [class*="notification"][class*="success"] {
-  border-color: $lrp-green !important;
+  border-left-color: $lrp-green !important;
   background: rgba($lrp-green, 0.1) !important;
 }
 
+// Error toasts
+.Toastify__toast--error,
 .toast--error,
 .notification--error,
 [class*="toast"][class*="error"],
 [class*="notification"][class*="error"] {
-  border-color: #dc2626 !important;
+  border-left-color: #dc2626 !important;
   background: rgba(220, 38, 38, 0.1) !important;
+}
+
+// Fix popup/dropdown contrast issues
+.popup,
+.popup__content,
+[class*="popup"] {
+  --popup-bg: #{$lrp-black-lighter} !important;
+  --popup-text: #{$lrp-white} !important;
+  --popup-button-highlight: rgba(#{red($lrp-green)}, #{green($lrp-green)}, #{blue($lrp-green)}, 0.2) !important;
+
+  background: $lrp-black-lighter !important;
+  color: $lrp-white !important;
+  border: 1px solid $lrp-border !important;
+}
+
+.popup-button-list__button {
+  color: $lrp-white !important;
+
+  &:hover {
+    background: rgba($lrp-green, 0.2) !important;
+    color: $lrp-white !important;
+  }
 }
 
 // ============================================
