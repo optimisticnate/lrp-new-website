@@ -487,3 +487,161 @@ input[type="checkbox"] {
   border-color: #4cbb17 !important;
   box-shadow: 0 8px 24px rgba(76, 187, 23, 0.3) !important;
 }
+
+/* ============================================
+   CHECKBOX CONSISTENCY FIX - LRP BRAND
+   ============================================
+   Fixes mixed checkmark/dash icons in list views
+   ============================================ */
+
+/* Force reset ALL checkbox styling */
+input[type="checkbox"],
+.checkbox input,
+.table input[type="checkbox"],
+.list-controls input[type="checkbox"],
+[role="checkbox"],
+[type="checkbox"] {
+  /* Reset appearance completely */
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+
+  /* Consistent sizing */
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+
+  /* LRP brand styling */
+  border: 2px solid #4cbb17 !important;
+  border-radius: 4px !important;
+  background: #0f0f0f !important;
+
+  /* Interaction */
+  cursor: pointer !important;
+  position: relative !important;
+  margin: 0 !important;
+  margin-right: 0.5rem !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+
+  /* Smooth transitions */
+  transition: all 0.2s ease !important;
+}
+
+/* CRITICAL: Remove ALL pseudo-elements that might show dashes */
+input[type="checkbox"]::before,
+input[type="checkbox"]::after,
+.checkbox input::before,
+.checkbox input::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Hover state - brighter green */
+input[type="checkbox"]:hover:not(:disabled):not(:checked) {
+  border-color: #60e421 !important;
+  box-shadow: 0 0 0 2px rgba(76, 187, 23, 0.1) !important;
+  background: #0f0f0f !important;
+}
+
+/* Focus state - green glow */
+input[type="checkbox"]:focus,
+input[type="checkbox"]:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(76, 187, 23, 0.3) !important;
+  border-color: #60e421 !important;
+}
+
+/* CHECKED state - green background */
+input[type="checkbox"]:checked {
+  background: #4cbb17 !important;
+  border-color: #4cbb17 !important;
+}
+
+/* CHECKED - Add ONLY checkmark, never dash */
+input[type="checkbox"]:checked::after {
+  content: '✓' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+
+  /* Checkmark styling */
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  font-family: Arial, sans-serif !important;
+}
+
+/* INDETERMINATE state - treat as checked with checkmark */
+input[type="checkbox"]:indeterminate {
+  background: #4cbb17 !important;
+  border-color: #4cbb17 !important;
+}
+
+/* INDETERMINATE - show checkmark, NOT dash */
+input[type="checkbox"]:indeterminate::after {
+  content: '✓' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+}
+
+/* Disabled state */
+input[type="checkbox"]:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  background: rgba(102, 102, 102, 0.2) !important;
+  border-color: #666666 !important;
+}
+
+input[type="checkbox"]:disabled:checked {
+  background: rgba(76, 187, 23, 0.3) !important;
+}
+
+/* Selected row highlighting */
+.row--selected,
+.table__row--selected,
+tr[aria-selected='true'],
+.list-item--selected {
+  background-color: rgba(76, 187, 23, 0.08) !important;
+  border-left: 3px solid #4cbb17 !important;
+}
+
+/* Selected row hover */
+.row--selected:hover,
+.table__row--selected:hover,
+tr[aria-selected='true']:hover {
+  background-color: rgba(76, 187, 23, 0.12) !important;
+}
+
+/* List item selection */
+.collection__list-item--selected,
+.list-item[aria-selected='true'] {
+  background-color: rgba(76, 187, 23, 0.05) !important;
+  border-color: #4cbb17 !important;
+}
+
+/* Bulk selection header checkbox */
+thead input[type="checkbox"],
+.table-header input[type="checkbox"],
+.list-header input[type="checkbox"] {
+  /* Same styling as above, already covered */
+}
+
+/* Table cell with checkbox */
+td input[type="checkbox"],
+.table-cell input[type="checkbox"] {
+  vertical-align: middle !important;
+}
