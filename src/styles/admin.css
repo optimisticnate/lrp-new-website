@@ -2,6 +2,98 @@
    LAKE RIDE PROS - PAYLOAD CMS ADMIN BRANDING
    ============================================ */
 
+/* ============================================
+   CRITICAL SEMANTIC FIX - VALIDATION ERRORS
+   ============================================ */
+/* MUST be at the top for highest specificity */
+/* These selectors match Payload's actual DOM structure */
+
+/* Validation error fields - RED borders, not green */
+.field--error input,
+.field--error textarea,
+.field--error select,
+.field[data-error='true'] input,
+.field[data-error='true'] textarea,
+.field[data-error='true'] select,
+.render-fields > .field.error input,
+.render-fields > .field.error textarea,
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"],
+.field-type-text.error input,
+.field-type-textarea.error textarea,
+.field-type-email.error input {
+  border-color: #ef4444 !important;
+  background-color: rgba(220, 38, 38, 0.1) !important;
+  box-shadow: none !important;
+}
+
+/* Error field focus - keep RED, don't change to green */
+.field--error input:focus,
+.field--error textarea:focus,
+.field--error select:focus,
+.field[data-error='true'] input:focus,
+.field[data-error='true'] textarea:focus,
+.field[data-error='true'] select:focus,
+.render-fields > .field.error input:focus,
+.render-fields > .field.error textarea:focus,
+input[aria-invalid="true"]:focus,
+textarea[aria-invalid="true"]:focus,
+select[aria-invalid="true"]:focus,
+.field-type-text.error input:focus,
+.field-type-textarea.error textarea:focus {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3) !important;
+  outline: none !important;
+}
+
+/* Error labels - RED text */
+.field--error label,
+.field--error .field-label,
+.field[data-error='true'] label,
+.field[data-error='true'] .field-label,
+.render-fields > .field.error label,
+.render-fields > .field.error .field-label,
+.field-type-text.error label,
+.field-type-textarea.error label {
+  color: #ef4444 !important;
+}
+
+/* Error message boxes - RED styling with left border */
+.field-error,
+.error-message,
+.field-error-message,
+[class*="field-error"],
+[class*="error-message"],
+.field--error [class*="message"],
+.field[data-error='true'] [class*="message"],
+.render-fields > .field.error [class*="message"] {
+  color: #ef4444 !important;
+  background-color: rgba(220, 38, 38, 0.15) !important;
+  border-left: 3px solid #dc2626 !important;
+  border-top: 1px solid rgba(220, 38, 38, 0.3) !important;
+  border-right: 1px solid rgba(220, 38, 38, 0.3) !important;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.3) !important;
+  padding: 0.5rem 0.75rem !important;
+  margin-top: 0.5rem !important;
+  border-radius: 4px;
+}
+
+/* Ensure valid fields DON'T get green borders when not focused */
+input:not(.error):not([aria-invalid="true"]):not(:focus),
+textarea:not(.error):not([aria-invalid="true"]):not(:focus),
+select:not(.error):not([aria-invalid="true"]):not(:focus) {
+  border-color: rgba(76, 187, 23, 0.3) !important;
+}
+
+/* Valid focused fields get LRP green */
+input:not(.error):not([aria-invalid="true"]):focus,
+textarea:not(.error):not([aria-invalid="true"]):focus,
+select:not(.error):not([aria-invalid="true"]):focus {
+  border-color: #4cbb17 !important;
+  box-shadow: 0 0 0 3px rgba(76, 187, 23, 0.2) !important;
+}
+
 /* Base Admin Container */
 .payload-admin,
 .app-wrapper,
@@ -397,173 +489,159 @@ input[type="checkbox"] {
 }
 
 /* ============================================
-   SEMANTIC COLOR FIXES - CRITICAL
+   CHECKBOX CONSISTENCY FIX - LRP BRAND
+   ============================================
+   Fixes mixed checkmark/dash icons in list views
    ============================================ */
-/* These rules fix the color confusion where errors,
-   focus, and success all appeared green */
 
-/* VALIDATION ERRORS - Must be RED, not green */
-.field-type-text.error input,
-.field-type-text.error textarea,
-.field-type-textarea.error textarea,
-.field-type-email.error input,
-.field-type-number.error input,
-[class*="field-type"][class*="error"] input,
-[class*="field-type"][class*="error"] textarea,
-[class*="field-type"][class*="error"] select,
-input[aria-invalid="true"],
-textarea[aria-invalid="true"],
-select[aria-invalid="true"],
-input.error,
-textarea.error,
-select.error {
-  border-color: #dc2626 !important;
-  background: rgba(220, 38, 38, 0.1) !important;
+/* Force reset ALL checkbox styling */
+input[type="checkbox"],
+.checkbox input,
+.table input[type="checkbox"],
+.list-controls input[type="checkbox"],
+[role="checkbox"],
+[type="checkbox"] {
+  /* Reset appearance completely */
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+
+  /* Consistent sizing */
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+
+  /* LRP brand styling */
+  border: 2px solid #4cbb17 !important;
+  border-radius: 4px !important;
+  background: #0f0f0f !important;
+
+  /* Interaction */
+  cursor: pointer !important;
+  position: relative !important;
+  margin: 0 !important;
+  margin-right: 0.5rem !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+
+  /* Smooth transitions */
+  transition: all 0.2s ease !important;
 }
 
-/* Error field focus - keep RED, don't change to green */
-.field-type-text.error input:focus,
-.field-type-text.error textarea:focus,
-.field-type-textarea.error textarea:focus,
-.field-type-email.error input:focus,
-.field-type-number.error input:focus,
-[class*="field-type"][class*="error"] input:focus,
-[class*="field-type"][class*="error"] textarea:focus,
-[class*="field-type"][class*="error"] select:focus,
-input[aria-invalid="true"]:focus,
-textarea[aria-invalid="true"]:focus,
-select[aria-invalid="true"]:focus,
-input.error:focus,
-textarea.error:focus,
-select.error:focus {
-  border-color: #dc2626 !important;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3) !important;
+/* CRITICAL: Remove ALL pseudo-elements that might show dashes */
+input[type="checkbox"]::before,
+input[type="checkbox"]::after,
+.checkbox input::before,
+.checkbox input::after {
+  content: none !important;
+  display: none !important;
 }
 
-/* Error labels - RED text */
-.field-type-text.error label,
-.field-type-textarea.error label,
-.field-type-email.error label,
-.field-type-number.error label,
-[class*="field-type"][class*="error"] label,
-[class*="field-type"][class*="error"] .field-label {
-  color: #ef4444 !important;
+/* Hover state - brighter green */
+input[type="checkbox"]:hover:not(:disabled):not(:checked) {
+  border-color: #60e421 !important;
+  box-shadow: 0 0 0 2px rgba(76, 187, 23, 0.1) !important;
+  background: #0f0f0f !important;
 }
 
-/* Error messages */
-.field-error,
-.error-message,
-[class*="field-error"],
-[class*="error-message"],
-[class*="field"][class*="error"] [class*="message"] {
-  color: #ef4444 !important;
-  background: rgba(220, 38, 38, 0.1) !important;
-  border-left: 3px solid #dc2626 !important;
-  padding: 0.5rem !important;
-  margin-top: 0.5rem !important;
+/* Focus state - green glow */
+input[type="checkbox"]:focus,
+input[type="checkbox"]:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(76, 187, 23, 0.3) !important;
+  border-color: #60e421 !important;
 }
 
-/* DESTRUCTIVE ACTIONS - Must be RED */
-.delete-button,
-button[class*="delete"],
-button[class*="remove"],
-button[aria-label*="delete"],
-button[aria-label*="Delete"],
-button[aria-label*="remove"],
-button[aria-label*="Remove"],
-[class*="btn"][class*="danger"],
-[class*="button"][class*="danger"],
-.popup button[class*="confirm"],
-.modal button[class*="confirm"],
-[class*="popup"] button[class*="primary"]:not([class*="cancel"]),
-[class*="modal"] button:last-of-type:not([class*="cancel"]) {
-  background: #dc2626 !important;
+/* CHECKED state - green background */
+input[type="checkbox"]:checked {
+  background: #4cbb17 !important;
+  border-color: #4cbb17 !important;
+}
+
+/* CHECKED - Add ONLY checkmark, never dash */
+input[type="checkbox"]:checked::after {
+  content: '✓' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+
+  /* Checkmark styling */
   color: #ffffff !important;
-  border-color: #dc2626 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  font-family: Arial, sans-serif !important;
 }
 
-.delete-button:hover,
-button[class*="delete"]:hover,
-button[class*="remove"]:hover,
-[class*="btn"][class*="danger"]:hover,
-[class*="button"][class*="danger"]:hover {
-  background: #b91c1c !important;
-  border-color: #b91c1c !important;
+/* INDETERMINATE state - treat as checked with checkmark */
+input[type="checkbox"]:indeterminate {
+  background: #4cbb17 !important;
+  border-color: #4cbb17 !important;
 }
 
-/* CANCEL/SECONDARY ACTIONS - Gray, not green */
-button[class*="cancel"],
-button[aria-label*="cancel"],
-button[aria-label*="Cancel"],
-.btn--style-secondary,
-[class*="btn"][class*="secondary"]:not([class*="danger"]),
-[class*="popup"] button:first-of-type,
-[class*="modal"] button:first-of-type {
-  background: transparent !important;
-  color: #999999 !important;
-  border: 1px solid #666666 !important;
-}
-
-button[class*="cancel"]:hover,
-.btn--style-secondary:hover:not([class*="danger"]) {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #cccccc !important;
-  border-color: #999999 !important;
-}
-
-/* TOAST NOTIFICATIONS - Differentiate success/error */
-.Toastify__toast--success,
-[class*="toast"][class*="success"],
-[class*="notification"][class*="success"] {
-  background: rgba(76, 187, 23, 0.15) !important;
-  border-left: 4px solid #4cbb17 !important;
-  border-top: none !important;
-  border-right: none !important;
-  border-bottom: none !important;
-}
-
-.Toastify__toast--error,
-[class*="toast"][class*="error"],
-[class*="notification"][class*="error"] {
-  background: rgba(220, 38, 38, 0.15) !important;
-  border-left: 4px solid #dc2626 !important;
-  border-top: none !important;
-  border-right: none !important;
-  border-bottom: none !important;
+/* INDETERMINATE - show checkmark, NOT dash */
+input[type="checkbox"]:indeterminate::after {
+  content: '✓' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
   color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
 }
 
-.Toastify__toast--warning,
-[class*="toast"][class*="warning"],
-[class*="notification"][class*="warning"] {
-  background: rgba(251, 191, 36, 0.15) !important;
-  border-left: 4px solid #f59e0b !important;
-  border-top: none !important;
-  border-right: none !important;
-  border-bottom: none !important;
-}
-
-/* Required field indicators */
-.required,
-[class*="required"],
-label [class*="required"],
-.field-label .required-indicator {
-  color: #ef4444 !important;
-}
-
-/* VALID fields - keep neutral, no green */
-input:not(.error):not([aria-invalid="true"]):not(:focus),
-textarea:not(.error):not([aria-invalid="true"]):not(:focus),
-select:not(.error):not([aria-invalid="true"]):not(:focus) {
-  /* Inherits default styles from above */
-}
-
-/* Disabled fields - gray out */
-input:disabled,
-textarea:disabled,
-select:disabled,
-button:disabled {
+/* Disabled state */
+input[type="checkbox"]:disabled {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
   background: rgba(102, 102, 102, 0.2) !important;
+  border-color: #666666 !important;
+}
+
+input[type="checkbox"]:disabled:checked {
+  background: rgba(76, 187, 23, 0.3) !important;
+}
+
+/* Selected row highlighting */
+.row--selected,
+.table__row--selected,
+tr[aria-selected='true'],
+.list-item--selected {
+  background-color: rgba(76, 187, 23, 0.08) !important;
+  border-left: 3px solid #4cbb17 !important;
+}
+
+/* Selected row hover */
+.row--selected:hover,
+.table__row--selected:hover,
+tr[aria-selected='true']:hover {
+  background-color: rgba(76, 187, 23, 0.12) !important;
+}
+
+/* List item selection */
+.collection__list-item--selected,
+.list-item[aria-selected='true'] {
+  background-color: rgba(76, 187, 23, 0.05) !important;
+  border-color: #4cbb17 !important;
+}
+
+/* Bulk selection header checkbox */
+thead input[type="checkbox"],
+.table-header input[type="checkbox"],
+.list-header input[type="checkbox"] {
+  /* Same styling as above, already covered */
+}
+
+/* Table cell with checkbox */
+td input[type="checkbox"],
+.table-cell input[type="checkbox"] {
+  vertical-align: middle !important;
 }

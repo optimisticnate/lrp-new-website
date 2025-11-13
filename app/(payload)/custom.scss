@@ -8,6 +8,83 @@
 @use "sass:color";
 
 // ============================================
+// CRITICAL SEMANTIC FIX - VALIDATION ERRORS
+// ============================================
+// MUST be at the top for highest specificity
+// These selectors match Payload's actual DOM structure
+
+// Validation error fields - RED borders, not green
+.field--error input,
+.field--error textarea,
+.field--error select,
+.field[data-error='true'] input,
+.field[data-error='true'] textarea,
+.field[data-error='true'] select,
+.render-fields > .field.error input,
+.render-fields > .field.error textarea,
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"],
+.field-type-text.error input,
+.field-type-textarea.error textarea,
+.field-type-email.error input {
+  border-color: #ef4444 !important;
+  background-color: rgba(220, 38, 38, 0.1) !important;
+  box-shadow: none !important;
+}
+
+// Error field focus - keep RED, don't change to green
+.field--error input:focus,
+.field--error textarea:focus,
+.field--error select:focus,
+.field[data-error='true'] input:focus,
+.field[data-error='true'] textarea:focus,
+.field[data-error='true'] select:focus,
+.render-fields > .field.error input:focus,
+.render-fields > .field.error textarea:focus,
+input[aria-invalid="true"]:focus,
+textarea[aria-invalid="true"]:focus,
+select[aria-invalid="true"]:focus,
+.field-type-text.error input:focus,
+.field-type-textarea.error textarea:focus {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3) !important;
+  outline: none !important;
+}
+
+// Error labels - RED text
+.field--error label,
+.field--error .field-label,
+.field[data-error='true'] label,
+.field[data-error='true'] .field-label,
+.render-fields > .field.error label,
+.render-fields > .field.error .field-label,
+.field-type-text.error label,
+.field-type-textarea.error label {
+  color: #ef4444 !important;
+}
+
+// Error message boxes - RED styling with left border
+.field-error,
+.error-message,
+.field-error-message,
+[class*="field-error"],
+[class*="error-message"],
+.field--error [class*="message"],
+.field[data-error='true'] [class*="message"],
+.render-fields > .field.error [class*="message"] {
+  color: #ef4444 !important;
+  background-color: rgba(220, 38, 38, 0.15) !important;
+  border-left: 3px solid #dc2626 !important;
+  border-top: 1px solid rgba(220, 38, 38, 0.3) !important;
+  border-right: 1px solid rgba(220, 38, 38, 0.3) !important;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.3) !important;
+  padding: 0.5rem 0.75rem !important;
+  margin-top: 0.5rem !important;
+  border-radius: 4px;
+}
+
+// ============================================
 // FONT LOADING
 // ============================================
 
@@ -651,58 +728,194 @@ button[class*="remove"],
 }
 
 // ============================================
-// CHECKBOXES & RADIO BUTTONS
+// CHECKBOXES & RADIO BUTTONS - ENHANCED
 // ============================================
+// Fixes mixed checkmark/dash icons and ensures consistency
 
+// CHECKBOXES - Force consistent styling across all states
 input[type="checkbox"],
-input[type="radio"] {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  border: 2px solid $lrp-border !important;
-  border-radius: 4px;
+.checkbox input,
+.table input[type="checkbox"],
+.list-controls input[type="checkbox"],
+[role="checkbox"],
+[type="checkbox"] {
+  // Reset appearance completely
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+
+  // Consistent sizing
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
+
+  // LRP brand styling
+  border: 2px solid $lrp-green !important;
+  border-radius: 4px !important;
   background: $lrp-black-lighter !important;
-  cursor: pointer;
-  position: relative;
-  margin-right: 0.5rem;
+
+  // Interaction
+  cursor: pointer !important;
+  position: relative !important;
+  margin: 0 !important;
+  margin-right: 0.5rem !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+
+  // Smooth transitions
+  transition: all 0.2s ease !important;
+}
+
+// CRITICAL: Remove ALL pseudo-elements that might show dashes
+input[type="checkbox"]::before,
+input[type="checkbox"]::after,
+.checkbox input::before,
+.checkbox input::after {
+  content: none !important;
+  display: none !important;
+}
+
+// Hover state - brighter green
+input[type="checkbox"]:hover:not(:disabled):not(:checked) {
+  border-color: $lrp-green-bright !important;
+  box-shadow: 0 0 0 2px rgba($lrp-green, 0.1) !important;
+  background: $lrp-black-lighter !important;
+}
+
+// Focus state - green glow
+input[type="checkbox"]:focus,
+input[type="checkbox"]:focus-visible {
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba($lrp-green, 0.3) !important;
+  border-color: $lrp-green-bright !important;
+}
+
+// CHECKED state - green background
+input[type="checkbox"]:checked {
+  background: $lrp-green !important;
+  border-color: $lrp-green !important;
+}
+
+// CHECKED - Add ONLY checkmark, never dash
+input[type="checkbox"]:checked::after {
+  content: '✓' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+
+  // Checkmark styling
+  color: $lrp-white !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  font-family: Arial, sans-serif !important;
+}
+
+// INDETERMINATE state - treat as checked with checkmark
+input[type="checkbox"]:indeterminate {
+  background: $lrp-green !important;
+  border-color: $lrp-green !important;
+}
+
+// INDETERMINATE - show checkmark, NOT dash
+input[type="checkbox"]:indeterminate::after {
+  content: '✓' !important;
+  display: block !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  color: $lrp-white !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+}
+
+// Disabled state
+input[type="checkbox"]:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  background: rgba(102, 102, 102, 0.2) !important;
+  border-color: #666666 !important;
+}
+
+input[type="checkbox"]:disabled:checked {
+  background: rgba($lrp-green, 0.3) !important;
+}
+
+// Selected row highlighting
+.row--selected,
+.table__row--selected,
+tr[aria-selected='true'],
+.list-item--selected {
+  background-color: rgba($lrp-green, 0.08) !important;
+  border-left: 3px solid $lrp-green !important;
+}
+
+// Selected row hover
+.row--selected:hover,
+.table__row--selected:hover,
+tr[aria-selected='true']:hover {
+  background-color: rgba($lrp-green, 0.12) !important;
+}
+
+// List item selection
+.collection__list-item--selected,
+.list-item[aria-selected='true'] {
+  background-color: rgba($lrp-green, 0.05) !important;
+  border-color: $lrp-green !important;
+}
+
+// Table cell with checkbox
+td input[type="checkbox"],
+.table-cell input[type="checkbox"] {
+  vertical-align: middle !important;
+}
+
+// RADIO BUTTONS - Keep simple styling
+input[type="radio"] {
+  appearance: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  border: 2px solid $lrp-border !important;
+  border-radius: 50% !important;
+  background: $lrp-black-lighter !important;
+  cursor: pointer !important;
+  position: relative !important;
+  margin-right: 0.5rem !important;
 
   &:checked {
     background: $lrp-green !important;
     border-color: $lrp-green !important;
 
     &::after {
-      content: '✓';
-      position: absolute;
-      color: $lrp-white;
-      font-size: 14px;
-      font-weight: 700;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      content: '' !important;
+      display: block !important;
+      position: absolute !important;
+      width: 8px !important;
+      height: 8px !important;
+      background: $lrp-white !important;
+      border-radius: 50% !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
     }
   }
 
   &:hover:not(:disabled) {
     border-color: $lrp-green !important;
-    box-shadow: 0 0 0 2px rgba($lrp-green, 0.1);
+    box-shadow: 0 0 0 2px rgba($lrp-green, 0.1) !important;
   }
 
   &:focus {
     outline: none !important;
     box-shadow: 0 0 0 3px rgba($lrp-green, 0.3) !important;
-  }
-}
-
-input[type="radio"] {
-  border-radius: 50%;
-
-  &:checked::after {
-    content: '';
-    width: 8px;
-    height: 8px;
-    background: $lrp-white;
-    border-radius: 50%;
   }
 }
 
