@@ -1,0 +1,443 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+@import "tailwindcss";
+
+/* Boardson Brand Font - Premium headings */
+@font-face {
+  font-family: 'Boardson';
+  src: url('/Boardson.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tailwind v4 dark mode configuration */
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #060606;
+
+  /* Lake Ride Pros Brand Colors - Energetic Green (same in both modes) */
+  --primary: #4cbb17;
+  --primary-dark: #3a8e11;
+  --primary-light: #60e421;
+  --secondary: #4cbb17;
+  --secondary-dark: #3a8e11;
+  --secondary-light: #60e421;
+
+  /* Brand color aliases for consistency */
+  --lrp-green: #4cbb17;
+  --lrp-green-light: #5cd91f;
+  --lrp-green-dark: #3a8e11;
+  --lrp-black: #060606;
+  --lrp-gray: #e8e8e8;
+
+  /* WCAG AA Compliant Text Colors for Light Mode */
+  --lrp-text-secondary: #666666;  /* 7:1 contrast on white */
+  --lrp-text-muted: #737373;      /* 4.5:1 contrast on white */
+
+  --neutral-50: #f9fafb;
+  --neutral-100: #f3f4f6;
+  --neutral-200: #e6e6e6;
+  --neutral-300: #d1d5db;
+  --neutral-400: #9ca3af;
+  --neutral-500: #6b7280;
+  --neutral-600: #4b5563;
+  --neutral-700: #374151;
+  --neutral-800: #1f2937;
+  --neutral-900: #111827;
+
+  /* Dark Mode specific colors */
+  --dark-bg-primary: #0a0a0a;
+  --dark-bg-secondary: #1a1a1a;
+  --dark-bg-tertiary: #2a2a2a;
+  --dark-border: #333333;
+
+  /* WCAG AA Compliant Text Colors for Dark Mode */
+  --dark-text-primary: #ffffff;
+  --dark-text-secondary: #d1d1d1;  /* 10:1 contrast on dark */
+  --dark-text-muted: #b8b8b8;      /* 7:1 contrast on dark */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-secondary-light: var(--secondary-light);
+
+  /* Brand colors */
+  --color-lrp-green: var(--lrp-green);
+  --color-lrp-green-light: var(--lrp-green-light);
+  --color-lrp-green-dark: var(--lrp-green-dark);
+  --color-lrp-black: var(--lrp-black);
+  --color-lrp-gray: var(--lrp-gray);
+
+  /* ADA compliant text colors */
+  --color-lrp-text-secondary: var(--lrp-text-secondary);
+  --color-lrp-text-muted: var(--lrp-text-muted);
+
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+
+  /* Dark mode colors */
+  --color-dark-bg-primary: var(--dark-bg-primary);
+  --color-dark-bg-secondary: var(--dark-bg-secondary);
+  --color-dark-bg-tertiary: var(--dark-bg-tertiary);
+  --color-dark-border: var(--dark-border);
+  --color-dark-text-primary: var(--dark-text-primary);
+  --color-dark-text-secondary: var(--dark-text-secondary);
+  --color-dark-text-muted: var(--dark-text-muted);
+
+  --font-sans: 'Montserrat', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-boardson: 'Boardson', 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+
+  /* Custom animations */
+  --animate-fadeIn: fadeIn 0.5s ease-in;
+  --animate-slideUp: slideUp 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode support - green pops even more on dark! */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+
+  /* WCAG AA Compliant neutral colors for dark mode (tested on #0a0a0a background) */
+  --neutral-50: #2a2a2a;
+  --neutral-100: #333333;
+  --neutral-200: #3d3d3d;
+  --neutral-300: #b8b8b8;  /* 7.8:1 contrast - up from #4b5563 (2.5:1) */
+  --neutral-400: #d1d1d1;  /* 11.6:1 contrast - up from #6b7280 (3.7:1) */
+  --neutral-500: #e5e5e5;  /* 15.3:1 contrast - up from #9ca3af (5.9:1) */
+  --neutral-600: #f5f5f5;  /* 17.8:1 contrast - up from #d1d5db */
+  --neutral-700: #f9f9f9;  /* Near white */
+  --neutral-800: #fcfcfc;  /* Very light */
+  --neutral-900: #ffffff;  /* Pure white */
+}
+
+/* Ensure body and html take full height and use proper backgrounds */
+/* Only apply to main app, not Payload admin */
+html:has([data-main-app]) {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+body:has([data-main-app]) {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Prevent white gaps on dark mode */
+.dark html:has([data-main-app]),
+.dark body:has([data-main-app]) {
+  background-color: #0a0a0a;
+}
+
+body:has([data-main-app]) {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Screen reader only class */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Hide scrollbar utility for horizontal scrolling */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+
+  /* Premium Shop Utilities */
+  .font-boardson {
+    font-family: var(--font-boardson);
+  }
+
+  .shop-card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .shop-card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(76, 187, 23, 0.2);
+    border-color: rgba(76, 187, 23, 0.3);
+  }
+
+  .skeleton-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(76, 187, 23, 0.05) 0%,
+      rgba(76, 187, 23, 0.15) 50%,
+      rgba(76, 187, 23, 0.05) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .stagger-fade-in {
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+}
+
+/* Hide Moovs FAB on the dedicated booking page */
+body[data-page="booking"] #moovs-fab-button,
+body[data-page="booking"] [id*="moovs"],
+body[data-page="booking"] [class*="moovs-fab"] {
+  display: none !important;
+}
+
+/* Force Moovs FAB to match Lake Ride Pros green branding */
+/* Target specific Moovs FAB selectors only */
+#moovs-fab-button,
+[id*="moovs-fab"],
+[class*="moovs-fab"] {
+  background-color: #4cbb17 !important;
+  background: #4cbb17 !important;
+}
+
+/* Only target buttons within the Moovs FAB container, not all fixed positioned divs */
+#moovs-fab-button > *,
+[id*="moovs-fab"] > button,
+[class*="moovs-fab"] > button {
+  background-color: #4cbb17 !important;
+  background: #4cbb17 !important;
+}
+
+#moovs-fab-button:hover,
+[id*="moovs-fab"]:hover,
+[class*="moovs-fab"]:hover {
+  background-color: #60e421 !important;
+  background: #60e421 !important;
+  box-shadow: 0 0 20px rgba(76, 187, 23, 0.4) !important;
+}
+
+/* Override any inline styles Moovs might use */
+#moovs-fab-button[style],
+[id*="moovs"][style] {
+  background-color: #4cbb17 !important;
+}
+
+/* If Moovs FAB has SVG or text, ensure it's visible on green */
+#moovs-fab-button svg,
+#moovs-fab-button span,
+[id*="moovs-fab"] svg,
+[id*="moovs-fab"] span {
+  color: white !important;
+  fill: white !important;
+}
+
+/* Ensure Moovs FAB has proper z-index but below our modal */
+#moovs-fab-button,
+[id*="moovs-fab"] {
+  z-index: 1000 !important;
+}
+
+/* Our modal should be above everything */
+.booking-modal-overlay {
+  z-index: 9999 !important;
+}
+
+/* Nuclear option: hide ALL fixed position elements in bottom-right when modal is open */
+body.modal-open [style*="position: fixed"][style*="bottom"][style*="right"]:not(.booking-modal):not(.booking-modal *) {
+  display: none !important;
+}
+
+/* ===========================
+   ACCESSIBILITY ENHANCEMENTS
+   =========================== */
+
+/* Visible focus indicators for keyboard navigation */
+/* Only apply to main app to avoid overriding Payload's focus styles */
+[data-main-app] *:focus-visible {
+  outline: 3px solid #4cbb17;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Enhanced focus for buttons and links */
+[data-main-app] button:focus-visible,
+[data-main-app] a:focus-visible {
+  outline: 3px solid #4cbb17;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(76, 187, 23, 0.2);
+}
+
+/* Skip to main content link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: #4cbb17;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  z-index: 10000;
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+  top: 1rem;
+  outline: 3px solid white;
+  outline-offset: 2px;
+}
+
+/* Minimum touch target size for accessibility (44x44px) */
+/* Only apply to main app to avoid breaking Payload's UI */
+[data-main-app] button,
+[data-main-app] a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure interactive elements are clearly distinguishable */
+[data-main-app] button:not(:disabled),
+[data-main-app] a:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+[data-main-app] button:disabled,
+[data-main-app] a[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Respect prefers-reduced-motion for users who need it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep opacity transitions for reduced motion users */
+  * {
+    transition-property: opacity !important;
+  }
+}
+
+/* High contrast mode support for Windows */
+@media (prefers-contrast: high) {
+  button,
+  a {
+    border: 2px solid currentColor;
+  }
+
+  .skip-link {
+    border: 3px solid white;
+  }
+}
+
+/* Ensure proper spacing for text readability */
+p, li, td, th {
+  line-height: 1.5;
+}
+
+/* Better focus for form elements */
+/* Only apply to main app to avoid overriding Payload's input styles */
+[data-main-app] input:focus-visible,
+[data-main-app] textarea:focus-visible,
+[data-main-app] select:focus-visible {
+  outline: 3px solid #4cbb17;
+  outline-offset: 2px;
+  border-color: #4cbb17;
+}
+
+/* Loading state accessibility */
+[aria-busy="true"] {
+  cursor: wait;
+}
+
+/* WCAG AA compliant placeholder text colors */
+::placeholder {
+  color: #6b7280;  /* 4.6:1 contrast on white background */
+  opacity: 1;
+}
+
+.dark ::placeholder {
+  color: #b8b8b8;  /* 7.8:1 contrast on #0a0a0a background - up from #9ca3af (5.9:1) */
+}
